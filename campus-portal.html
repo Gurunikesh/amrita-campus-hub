@@ -686,7 +686,14 @@ async function syncDataFromBackend() {
 
         if (eqBookings && eqBookings.length) {
             DB.equipmentBookings = eqBookings.map(b => ({
-                id: b.id, eqId: b.equipment_id, student: b.student_name, date: b.date, slot: b.slot, status: b.status
+                id: b.id,
+                eqId: b.equipment_id,
+                equipment_name: b.equipment_name,
+                student: b.student_name,
+                student_id: b.student_id,
+                date: b.date,
+                slot: b.slot,
+                status: b.status
             }));
         }
 
@@ -1075,14 +1082,23 @@ function viewFablabStudent() {
     if(myBookings.length > 0) {
         html += `<h3 class="font-bold text-slate-800 mt-6 mb-3">My Upcoming Slots</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
         myBookings.forEach(b => {
-            const eq = DB.equipment.find(e => e.id === b.eqId);
+            const eq = DB.equipment.find(e => e.id === b.eqId || e.id === b.equipment_id);
+            const status = b.status || 'CONFIRMED';
+            const statusColor = status === 'CONFIRMED' ? 'bg-emerald-100 text-emerald-800' : (status === 'CANCELLED' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800');
+            const borderColor = status === 'CONFIRMED' ? 'border-emerald-200 border-l-emerald-500' : (status === 'CANCELLED' ? 'border-rose-200 border-l-rose-500' : 'border-amber-200 border-l-amber-500');
+
             html += `
-                <div class="bg-white p-4 rounded-xl border border-emerald-200 shadow-sm border-l-4 border-l-emerald-500">
-                    <div class="flex justify-between">
-                        <h4 class="font-bold text-slate-800">${eq.name}</h4>
-                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Confirmed</span>
+                <div class="bg-white p-4 rounded-xl border ${borderColor} shadow-sm border-l-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-slate-800">${eq ? eq.name : b.equipment_name || 'Unknown'}</h4>
+                            <p class="text-xs text-slate-500 mt-2"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i> ${b.date} &nbsp;|&nbsp; <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> ${b.slot}</p>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="${statusColor} text-[10px] font-bold px-2 py-0.5 rounded uppercase">${status}</span>
+                            ${status === 'CONFIRMED' ? `<button onclick="cancelMyBooking('${b.id}')" class="text-xs text-rose-600 hover:text-rose-800 font-semibold">Cancel</button>` : ''}
+                        </div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-2"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i> ${b.date} &nbsp;|&nbsp; <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> ${b.slot}</p>
                 </div>
             `;
         });
@@ -1962,14 +1978,23 @@ function viewFablabStudent() {
     if(myBookings.length > 0) {
         html += `<h3 class="font-bold text-slate-800 mt-6 mb-3">My Upcoming Slots</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
         myBookings.forEach(b => {
-            const eq = DB.equipment.find(e => e.id === b.eqId);
+            const eq = DB.equipment.find(e => e.id === b.eqId || e.id === b.equipment_id);
+            const status = b.status || 'CONFIRMED';
+            const statusColor = status === 'CONFIRMED' ? 'bg-emerald-100 text-emerald-800' : (status === 'CANCELLED' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800');
+            const borderColor = status === 'CONFIRMED' ? 'border-emerald-200 border-l-emerald-500' : (status === 'CANCELLED' ? 'border-rose-200 border-l-rose-500' : 'border-amber-200 border-l-amber-500');
+
             html += `
-                <div class="bg-white p-4 rounded-xl border border-emerald-200 shadow-sm border-l-4 border-l-emerald-500">
-                    <div class="flex justify-between">
-                        <h4 class="font-bold text-slate-800">${eq.name}</h4>
-                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Confirmed</span>
+                <div class="bg-white p-4 rounded-xl border ${borderColor} shadow-sm border-l-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-slate-800">${eq ? eq.name : b.equipment_name || 'Unknown'}</h4>
+                            <p class="text-xs text-slate-500 mt-2"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i> ${b.date} &nbsp;|&nbsp; <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> ${b.slot}</p>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="${statusColor} text-[10px] font-bold px-2 py-0.5 rounded uppercase">${status}</span>
+                            ${status === 'CONFIRMED' ? `<button onclick="cancelMyBooking('${b.id}')" class="text-xs text-rose-600 hover:text-rose-800 font-semibold">Cancel</button>` : ''}
+                        </div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-2"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i> ${b.date} &nbsp;|&nbsp; <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> ${b.slot}</p>
                 </div>
             `;
         });
@@ -2801,11 +2826,24 @@ function viewLabStaffBookings() {
 
 async function cancelBooking(bookingId) {
     if(!confirm('Are you sure you want to cancel this booking?')) return;
-    
+
     const booking = DB.equipmentBookings.find(b => b.id === bookingId);
     if(booking) {
         booking.status = 'CANCELLED';
         await HubService.updateEquipmentBooking(bookingId, { status: 'CANCELLED' });
+        renderActiveTab();
+        showNotification('Booking cancelled successfully', 'success');
+    }
+}
+
+async function cancelMyBooking(bookingId) {
+    if(!confirm('Are you sure you want to cancel this booking?')) return;
+
+    const booking = DB.equipmentBookings.find(b => b.id === bookingId);
+    if(booking) {
+        booking.status = 'CANCELLED';
+        await HubService.updateEquipmentBooking(bookingId, { status: 'CANCELLED' });
+        await syncDataFromBackend(); // Refresh from backend to get updated status
         renderActiveTab();
         showNotification('Booking cancelled successfully', 'success');
     }
