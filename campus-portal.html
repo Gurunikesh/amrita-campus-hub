@@ -604,6 +604,7 @@ async function setupUserSession(profile) {
 
     if (currentUser.role === 'STUDENT') {
         DB.student = {
+            id: profile.id,
             name: currentUser.name,
             roll: profile.roll_number || profile.roll || 'CB.EN.U4CSE23001',
             dept: currentUser.dept,
@@ -1152,11 +1153,13 @@ async function confirmEquipmentBooking(eqId) {
     }
 
     const eq = DB.equipment.find(e => e.id === eqId);
+    const studentId = DB.currentUser?.id || DB.student?.id;
+
     const newBooking = {
         id: 'EB-' + Date.now(),
         eqId: eqId,
         equipment_name: eq.name,
-        student_id: DB.currentUser?.id,
+        student_id: studentId,
         student: DB.student.name || currentUser?.name || 'Student',
         date: date,
         slot: slot,
@@ -1164,11 +1167,16 @@ async function confirmEquipmentBooking(eqId) {
     };
 
     DB.equipmentBookings.push(newBooking);
-    await HubService.bookEquipment(newBooking);
 
-    closeModal();
-    renderActiveTab();
-    showNotification(`Slot successfully booked for ${date} at ${slot}.`, 'success');
+    try {
+        await HubService.bookEquipment(newBooking);
+        closeModal();
+        renderActiveTab();
+        showNotification(`Slot successfully booked for ${date} at ${slot}.`, 'success');
+    } catch (error) {
+        console.error('Booking error:', error);
+        showNotification(`Booking error: ${error.message}`, 'error');
+    }
 }
 
 // ==========================================
