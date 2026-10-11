@@ -783,7 +783,8 @@ const navConfig = {
     LAB_STAFF: [
         { header: true, label: 'LAB STAFF ACTIONS' },
         { id: 'ledger', label: 'Issue & Return Ledger', icon: 'clipboard-check' },
-        { id: 'inventory', label: 'Master Inventory Management', icon: 'boxes' }
+        { id: 'inventory', label: 'Master Inventory Management', icon: 'boxes' },
+        { id: 'lab_staff_bookings', label: 'Equipment Bookings', icon: 'calendar-clock' }
     ],
     ADMIN: [
         { header: true, label: 'ADMIN DASHBOARD' },
@@ -1019,6 +1020,7 @@ async function renderActiveTab() {
             break;
         case 'ledger': title.innerText = 'Component Issue & Return Logging'; container.innerHTML = viewLedger(); break;
         case 'inventory': title.innerText = 'Inventory Stock Management'; container.innerHTML = viewInventory(); break;
+        case 'lab_staff_bookings': title.innerText = 'Equipment Bookings Management'; container.innerHTML = viewLabStaffBookings(); break;
 
         case 'faculty_approvals': title.innerText = 'Component Indent Approvals'; container.innerHTML = viewFacultyApprovals(); break;
         case 'faculty_schedule': title.innerText = 'My Timetable'; container.innerHTML = viewFacultySchedule(); break;
@@ -1149,12 +1151,16 @@ async function confirmEquipmentBooking(eqId) {
         return showNotification("This slot is already booked. Please choose another time.", "error");
     }
 
+    const eq = DB.equipment.find(e => e.id === eqId);
     const newBooking = {
         id: 'EB-' + Date.now(),
         eqId: eqId,
+        equipment_name: eq.name,
+        student_id: DB.currentUser?.id,
         student: DB.student.name || currentUser?.name || 'Student',
         date: date,
-        slot: slot
+        slot: slot,
+        purpose: 'Project use'
     };
 
     DB.equipmentBookings.push(newBooking);
@@ -2731,6 +2737,70 @@ function viewInventory() {
             </div>
         </div>
     `;
+}
+
+function viewLabStaffBookings() {
+    return `
+        <div class="space-y-4 max-w-6xl mx-auto">
+            <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-6 rounded-2xl shadow-sm text-white">
+                <h2 class="text-xl font-bold">Equipment Bookings Management</h2>
+                <p class="text-xs text-slate-300 mt-1">View and manage all FabLab equipment bookings</p>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="text-left p-4 font-semibold text-slate-700">Equipment</th>
+                            <th class="text-left p-4 font-semibold text-slate-700">Student</th>
+                            <th class="text-left p-4 font-semibold text-slate-700">Date</th>
+                            <th class="text-left p-4 font-semibold text-slate-700">Slot</th>
+                            <th class="text-left p-4 font-semibold text-slate-700">Status</th>
+                            <th class="text-left p-4 font-semibold text-slate-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${DB.equipmentBookings.length === 0 ? 
+                            '<tr><td colspan="6" class="p-8 text-center text-slate-500">No bookings found</td></tr>' :
+                            DB.equipmentBookings.map(b => {
+                                const eq = DB.equipment.find(e => e.id === b.eqId || e.id === b.equipment_id);
+                                return `
+                                    <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                        <td class="p-4 font-medium text-slate-800">${eq ? eq.name : b.equipment_name || 'Unknown'}</td>
+                                        <td class="p-4 text-slate-600">${b.student || b.student_name}</td>
+                                        <td class="p-4 text-slate-600">${b.date}</td>
+                                        <td class="p-4 text-slate-600">${b.slot}</td>
+                                        <td class="p-4">
+                                            <span class="px-2 py-1 rounded-full text-xs font-bold ${b.status === 'CONFIRMED' ? 'bg-emerald-100 text-emerald-800' : (b.status === 'CANCELLED' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800')}">
+                                                ${b.status}
+                                            </span>
+                                        </td>
+                                        <td class="p-4">
+                                            ${b.status === 'CONFIRMED' ? 
+                                                `<button onclick="cancelBooking('${b.id}')" class="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-xs font-bold">Cancel</button>` :
+                                                '<span class="text-slate-400 text-xs">Closed</span>'
+                                            }
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
+
+async function cancelBooking(bookingId) {
+    if(!confirm('Are you sure you want to cancel this booking?')) return;
+    
+    const booking = DB.equipmentBookings.find(b => b.id === bookingId);
+    if(booking) {
+        booking.status = 'CANCELLED';
+        await HubService.updateEquipmentBooking(bookingId, { status: 'CANCELLED' });
+        renderActiveTab();
+        showNotification('Booking cancelled successfully', 'success');
+    }
 }
 
 async function updateQty(id, diff) {

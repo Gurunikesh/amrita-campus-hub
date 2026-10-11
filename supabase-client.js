@@ -460,12 +460,22 @@
             const payload = {
                 id: booking.id || ('EB-' + Date.now()),
                 equipment_id: booking.eqId,
+                equipment_name: booking.equipment_name,
+                student_id: booking.student_id,
                 student_name: booking.student,
                 date: booking.date,
                 slot: booking.slot,
-                status: 'CONFIRMED'
+                status: 'CONFIRMED',
+                purpose: booking.purpose || 'Project use'
             };
             const { error } = await this.client.from('equipment_bookings').insert(payload);
+            if (error) throw error;
+            return true;
+        },
+
+        updateEquipmentBooking: async function(bookingId, updates) {
+            if (!this.client || !this.isConfigured) return true;
+            const { error } = await this.client.from('equipment_bookings').update(updates).eq('id', bookingId);
             if (error) throw error;
             return true;
         },
