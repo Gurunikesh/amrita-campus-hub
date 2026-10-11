@@ -3,12 +3,12 @@
 
 [[redirects]]
   from = "/"
-  to = "/final_final.html"
+  to = "/campus-portal.html"
   status = 200
 
 [[redirects]]
   from = "/login"
-  to = "/final_final.html"
+  to = "/campus-portal.html"
   status = 200
 
 [[redirects]]

@@ -2710,7 +2710,7 @@
                 const session = await HubService.getSession();
                 if (!session || !session.profile || session.profile.role !== 'ADMIN') {
                     alert('Access Denied: Administrator role required to view this dashboard.');
-                    window.location.href = 'final_final.html';
+                    window.location.href = 'campus-portal.html';
                     return false;
                 }
                 const nameDisplay = document.getElementById('admin-user-display');
@@ -2720,7 +2720,7 @@
                 return true;
             } catch (err) {
                 console.error('Admin Auth Check Failed:', err);
-                window.location.href = 'final_final.html';
+                window.location.href = 'campus-portal.html';
                 return false;
             }
         }
@@ -2729,7 +2729,7 @@
             try {
                 await HubService.logout();
             } finally {
-                window.location.href = 'final_final.html';
+                window.location.href = 'campus-portal.html';
             }
         }
 

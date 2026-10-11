@@ -37,7 +37,7 @@ A comprehensive university campus management portal built with vanilla HTML/Java
 
 ```
 Genesis/
-├── final_final.html          # Main portal (student/staff/coordinator)
+├── campus-portal.html        # Main portal (student/staff/coordinator)
 ├── admin.html                 # Admin dashboard
 ├── config.js                  # Supabase configuration
 ├── supabase-client.js        # Backend abstraction layer
