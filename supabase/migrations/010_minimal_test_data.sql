@@ -71,19 +71,19 @@ INSERT INTO public.profiles (id, full_name, email, role, department, designation
 
 -- STUDENTS (Section A - Advisor: Gandhiraj)
 INSERT INTO public.profiles (id, full_name, email, role, department, roll_number, section_id, sem, batch) VALUES
-('00000000-0000-0000-0000-000000000010', 'Arjun Sharma', 'cb.en.u4cse23001@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23001', 'CSE-S5-A', 5, '2023'),
-('00000000-0000-0000-0000-000000000011', 'Priya Nair', 'cb.en.u4cse23002@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23002', 'CSE-S5-A', 5, '2023'),
-('00000000-0000-0000-0000-000000000012', 'Rahul Menon', 'cb.en.u4cse23003@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23003', 'CSE-S5-A', 5, '2023'),
-('00000000-0000-0000-0000-000000000013', 'Ananya Reddy', 'cb.en.u4cse23004@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23004', 'CSE-S5-A', 5, '2023'),
-('00000000-0000-0000-0000-000000000014', 'Vikram Pillai', 'cb.en.u4cse23005@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23005', 'CSE-S5-A', 5, '2023');
+('00000000-0000-0000-0000-000000000010', 'Arjun Sharma', 'cb.en.u4ece24001@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24001', 'CSE-S5-A', 5, '2024'),
+('00000000-0000-0000-0000-000000000011', 'Priya Nair', 'cb.en.u4ece24002@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24002', 'CSE-S5-A', 5, '2024'),
+('00000000-0000-0000-0000-000000000012', 'Rahul Menon', 'cb.en.u4ece24003@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24003', 'CSE-S5-A', 5, '2024'),
+('00000000-0000-0000-0000-000000000013', 'Ananya Reddy', 'cb.en.u4ece24004@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24004', 'CSE-S5-A', 5, '2024'),
+('00000000-0000-0000-0000-000000000014', 'Vikram Pillai', 'cb.en.u4ece24005@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24005', 'CSE-S5-A', 5, '2024');
 
 -- STUDENTS (Section B - Advisor: Karthika)
 INSERT INTO public.profiles (id, full_name, email, role, department, roll_number, section_id, sem, batch) VALUES
-('00000000-0000-0000-0000-000000000015', 'Divya Kumar', 'cb.en.u4cse23006@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23006', 'CSE-S5-B', 5, '2023'),
-('00000000-0000-0000-0000-000000000016', 'Siddharth Verma', 'cb.en.u4cse23007@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23007', 'CSE-S5-B', 5, '2023'),
-('00000000-0000-0000-0000-000000000017', 'Kavya Iyer', 'cb.en.u4cse23008@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23008', 'CSE-S5-B', 5, '2023'),
-('00000000-0000-0000-0000-000000000018', 'Abhishek Singh', 'cb.en.u4cse23009@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23009', 'CSE-S5-B', 5, '2023'),
-('00000000-0000-0000-0000-000000000019', 'Deepika Suresh', 'cb.en.u4cse23010@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4CSE23010', 'CSE-S5-B', 5, '2023');
+('00000000-0000-0000-0000-000000000015', 'Divya Kumar', 'cb.en.u4ece24006@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24006', 'CSE-S5-B', 5, '2024'),
+('00000000-0000-0000-0000-000000000016', 'Siddharth Verma', 'cb.en.u4ece24007@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24007', 'CSE-S5-B', 5, '2024'),
+('00000000-0000-0000-0000-000000000017', 'Kavya Iyer', 'cb.en.u4ece24008@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24008', 'CSE-S5-B', 5, '2024'),
+('00000000-0000-0000-0000-000000000018', 'Abhishek Singh', 'cb.en.u4ece24009@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24009', 'CSE-S5-B', 5, '2024'),
+('00000000-0000-0000-0000-000000000019', 'Deepika Suresh', 'cb.en.u4ece24010@cb.students.amrita.edu', 'STUDENT', 'CSE', 'CB.EN.U4ECE24010', 'CSE-S5-B', 5, '2024');
 
 -- 5. UPDATE DEPARTMENT WITH COORDINATOR_ID (now that profile exists)
 UPDATE public.departments SET coordinator_id = '00000000-0000-0000-0000-000000000002' WHERE code = 'CSE';
@@ -144,24 +144,24 @@ INSERT INTO public.club_memberships (id, club_id, user_id, user_name, status, jo
 -- Email                          | Password      | Role (in user_metadata)
 -- -----------------------------------------------------------------------
 -- admin@amrita.edu              | admin123      | {"role": "ADMIN"}
--- senthil@amrita.edu            | senthil123    | {"role": "DEPT_COORDINATOR"}
--- gandhiraj@amrita.edu          | gandhiraj123  | {"role": "FACULTY"}
--- anand@amrita.edu              | anand123      | {"role": "FACULTY"}
--- karthika@amrita.edu           | karthika123   | {"role": "FACULTY"}
--- rajesh@amrita.edu             | rajesh123     | {"role": "FACULTY"}
--- ramesh@amrita.edu             | ramesh123     | {"role": "LAB_STAFF"}
--- sudheesh@amrita.edu           | sudheesh123   | {"role": "LAB_STAFF"}
--- meera@amrita.edu              | meera123      | {"role": "LAB_STAFF"}
--- cb.en.u4cse23001@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23002@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23003@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23004@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23005@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23006@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23007@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23008@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23009@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
--- cb.en.u4cse23010@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- senthil@amrita.edu            | staff123      | {"role": "DEPT_COORDINATOR"}
+-- gandhiraj@amrita.edu          | staff123      | {"role": "FACULTY"}
+-- anand@amrita.edu              | staff123      | {"role": "FACULTY"}
+-- karthika@amrita.edu           | staff123      | {"role": "FACULTY"}
+-- rajesh@amrita.edu             | staff123      | {"role": "FACULTY"}
+-- ramesh@amrita.edu             | staff123      | {"role": "LAB_STAFF"}
+-- sudheesh@amrita.edu           | staff123      | {"role": "LAB_STAFF"}
+-- meera@amrita.edu              | staff123      | {"role": "LAB_STAFF"}
+-- cb.en.u4ece24001@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24002@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24003@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24004@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24005@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24006@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24007@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24008@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24009@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
+-- cb.en.u4ece24010@cb.students.amrita.edu | student123 | {"role": "STUDENT"}
 --
 -- IMPORTANT: After creating auth users, you may need to update the UUIDs
 -- in the profiles table above to match the actual auth.user IDs.

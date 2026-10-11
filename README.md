@@ -102,20 +102,28 @@ After running `010_minimal_test_data.sql`, create auth users in Supabase Dashboa
 - User metadata: `{"role": "ADMIN"}`
 
 **Faculty (5 users):**
-- `senthil@amrita.edu` / `senthil123` (Dept Coordinator)
-- `gandhiraj@amrita.edu` / `gandhiraj123` (Advisor + Lab Incharge)
-- `anand@amrita.edu` / `anand123` (Lab Incharge)
-- `karthika@amrita.edu` / `karthika123` (Class Advisor)
-- `rajesh@amrita.edu` / `rajesh123` (Faculty/Club Incharge)
+- `senthil@amrita.edu` / `staff123` (Dept Coordinator)
+- `gandhiraj@amrita.edu` / `staff123` (Advisor + Lab Incharge)
+- `anand@amrita.edu` / `staff123` (Lab Incharge)
+- `karthika@amrita.edu` / `staff123` (Class Advisor)
+- `rajesh@amrita.edu` / `staff123` (Faculty/Club Incharge)
 
 **Lab Staff (3 users):**
-- `ramesh@amrita.edu` / `ramesh123` (Component Management)
-- `sudheesh@amrita.edu` / `sudheesh123` (Equipment Booking)
-- `meera@amrita.edu` / `meera123` (Club Coordinator)
+- `ramesh@amrita.edu` / `staff123` (Component Management)
+- `sudheesh@amrita.edu` / `staff123` (Equipment Booking)
+- `meera@amrita.edu` / `staff123` (Club Coordinator)
 
 **Students (10 users):**
-- `cb.en.u4cse23001@cb.students.amrita.edu` / `student123`
-- (all 10 students use password: `student123`)
+- `cb.en.u4ece24001@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24002@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24003@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24004@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24005@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24006@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24007@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24008@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24009@cb.students.amrita.edu` / `student123`
+- `cb.en.u4ece24010@cb.students.amrita.edu` / `student123`
 
 ### 4. Deploy
 
